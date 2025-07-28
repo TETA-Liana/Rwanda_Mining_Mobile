@@ -1,0 +1,57 @@
+[
+  {
+    "id": "EXH001",
+    "name": "Lisa Thompson",
+    "role": "Exhibitor",
+    "company": "Mining Equipment Pro",
+    "email": "lisa.thompson@miningequipment.com",
+    "phone": "+1234567894",
+    "status": "eligible",
+    "boothNumber": "A1",
+    "registrationDate": "2024-01-08"
+  },
+  {
+    "id": "EXH002",
+    "name": "Ahmed Hassan",
+    "role": "Exhibitor",
+    "company": "Safety First Mining Gear",
+    "email": "ahmed.hassan@safetyfirst.com",
+    "phone": "+1234567895",
+    "status": "eligible",
+    "boothNumber": "A2",
+    "registrationDate": "2024-01-09"
+  },
+  {
+    "id": "EXH003",
+    "name": "Elena Rodriguez",
+    "role": "Exhibitor",
+    "company": "Green Mining Solutions",
+    "email": "elena.rodriguez@greenmining.com",
+    "phone": "+1234567896",
+    "status": "eligible",
+    "boothNumber": "B1",
+    "registrationDate": "2024-01-11"
+  },
+  {
+    "id": "EXH004",
+    "name": "James O'Connor",
+    "role": "Exhibitor",
+    "company": "Mining Analytics Corp",
+    "email": "james.oconnor@mininganalytics.com",
+    "phone": "+1234567897",
+    "status": "eligible",
+    "boothNumber": "B2",
+    "registrationDate": "2024-01-13"
+  },
+  {
+    "id": "EXH005",
+    "name": "Yuki Tanaka",
+    "role": "Exhibitor",
+    "company": "Precision Mining Tools",
+    "email": "yuki.tanaka@precisionmining.com",
+    "phone": "+1234567898",
+    "status": "eligible",
+    "boothNumber": "C1",
+    "registrationDate": "2024-01-16"
+  }
+] 

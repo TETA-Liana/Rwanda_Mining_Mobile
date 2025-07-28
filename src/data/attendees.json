@@ -1,0 +1,52 @@
+[
+  {
+    "id": "ATT001",
+    "name": "Jean Pierre Uwimana",
+    "role": "Attendee",
+    "company": "Rwanda Mining Association",
+    "email": "jean.uwimana@rwandamining.rw",
+    "phone": "+250788123456",
+    "status": "eligible",
+    "registrationDate": "2024-01-15"
+  },
+  {
+    "id": "ATT002",
+    "name": "Marie Claire Niyonsaba",
+    "role": "Attendee",
+    "company": "Kigali Chamber of Commerce",
+    "email": "marie.niyonsaba@kcc.rw",
+    "phone": "+250789234567",
+    "status": "eligible",
+    "registrationDate": "2024-01-20"
+  },
+  {
+    "id": "ATT003",
+    "name": "Emmanuel Gasana",
+    "role": "Attendee",
+    "company": "Rwanda Development Board",
+    "email": "emmanuel.gasana@rdb.rw",
+    "phone": "+250790345678",
+    "status": "eligible",
+    "registrationDate": "2024-01-25"
+  },
+  {
+    "id": "ATT004",
+    "name": "Grace Mukamana",
+    "role": "Attendee",
+    "company": "University of Rwanda",
+    "email": "grace.mukamana@ur.ac.rw",
+    "phone": "+250791456789",
+    "status": "eligible",
+    "registrationDate": "2024-02-01"
+  },
+  {
+    "id": "ATT005",
+    "name": "David Nshuti",
+    "role": "Attendee",
+    "company": "Rwanda Mining Corporation",
+    "email": "david.nshuti@rmc.rw",
+    "phone": "+250792567890",
+    "status": "eligible",
+    "registrationDate": "2024-02-05"
+  }
+] 

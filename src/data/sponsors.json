@@ -1,0 +1,46 @@
+[
+  {
+    "id": "SPO001",
+    "name": "Dr. Sarah Johnson",
+    "role": "Sponsor",
+    "company": "Mining Solutions Inc.",
+    "email": "sarah.johnson@miningsolutions.com",
+    "phone": "+1234567890",
+    "status": "eligible",
+    "sponsorshipLevel": "Platinum",
+    "registrationDate": "2024-01-10"
+  },
+  {
+    "id": "SPO002",
+    "name": "Michael Chen",
+    "role": "Sponsor",
+    "company": "Global Mining Technologies",
+    "email": "michael.chen@gmt.com",
+    "phone": "+1234567891",
+    "status": "eligible",
+    "sponsorshipLevel": "Gold",
+    "registrationDate": "2024-01-12"
+  },
+  {
+    "id": "SPO003",
+    "name": "Fatima Al-Zahra",
+    "role": "Sponsor",
+    "company": "African Mining Consortium",
+    "email": "fatima.alzahra@amc.africa",
+    "phone": "+1234567892",
+    "status": "eligible",
+    "sponsorshipLevel": "Silver",
+    "registrationDate": "2024-01-15"
+  },
+  {
+    "id": "SPO004",
+    "name": "Robert Williams",
+    "role": "Sponsor",
+    "company": "Sustainable Mining Partners",
+    "email": "robert.williams@smp.com",
+    "phone": "+1234567893",
+    "status": "eligible",
+    "sponsorshipLevel": "Bronze",
+    "registrationDate": "2024-01-18"
+  }
+] 
