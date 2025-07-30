@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { PieChart } from "react-native-svg-charts";
+import { PieChart } from "react-native-chart-kit";
 import useScanStore from "../store/scanStore";
 
 const DashboardScreen = () => {
@@ -29,24 +29,27 @@ const DashboardScreen = () => {
 
   const chartData = [
     {
-      key: 1,
-      amount: stats.attendees,
-      svg: { fill: "#1a5f3c" },
-      arc: { cornerRadius: 5 },
+      name: "Attendees",
+      population: stats.attendees,
+      color: "#1a5f3c",
+      legendFontColor: "#1a5f3c",
+      legendFontSize: 14,
     },
     {
-      key: 2,
-      amount: stats.sponsors,
-      svg: { fill: "#f4c430" },
-      arc: { cornerRadius: 5 },
+      name: "Sponsors",
+      population: stats.sponsors,
+      color: "#f4c430",
+      legendFontColor: "#f4c430",
+      legendFontSize: 14,
     },
     {
-      key: 3,
-      amount: stats.exhibitors,
-      svg: { fill: "#0066cc" },
-      arc: { cornerRadius: 5 },
+      name: "Exhibitors",
+      population: stats.exhibitors,
+      color: "#0066cc",
+      legendFontColor: "#0066cc",
+      legendFontSize: 14,
     },
-  ].filter((item) => item.amount > 0);
+  ].filter((item) => item.population > 0);
 
   const renderRecentScan = ({ item }) => {
     const getRoleColor = () => {
@@ -177,10 +180,17 @@ const DashboardScreen = () => {
           {chartData.length > 0 ? (
             <View className="items-center mb-4">
               <PieChart
-                style={{ height: 200, width: 200 }}
                 data={chartData}
-                innerRadius={40}
-                padAngle={0.02}
+                width={320}
+                height={200}
+                chartConfig={{
+                  color: (opacity = 1) => `rgba(26, 95, 60, ${opacity})`,
+                  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                }}
+                accessor={"population"}
+                backgroundColor={"transparent"}
+                paddingLeft={"15"}
+                absolute
               />
             </View>
           ) : (

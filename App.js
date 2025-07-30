@@ -10,6 +10,9 @@ import HomeScreen from "./src/screens/HomeScreen";
 import ScannerScreen from "./src/screens/ScannerScreen";
 import ResultScreen from "./src/screens/ResultScreen";
 import DashboardScreen from "./src/screens/DashboardScreen";
+import AttendeesScreen from "./src/screens/AttendeesScreen";
+import SponsorsScreen from "./src/screens/SponsorsScreen";
+import ExhibitorsScreen from "./src/screens/ExhibitorsScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,6 +45,21 @@ function MainStack() {
         name="Result"
         component={ResultScreen}
         options={{ title: "Scan Result" }}
+      />
+      <Stack.Screen
+        name="Attendees"
+        component={AttendeesScreen}
+        options={{ title: "Attendees", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Sponsors"
+        component={SponsorsScreen}
+        options={{ title: "Sponsors", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Exhibitors"
+        component={ExhibitorsScreen}
+        options={{ title: "Exhibitors", headerShown: false }}
       />
     </Stack.Navigator>
   );

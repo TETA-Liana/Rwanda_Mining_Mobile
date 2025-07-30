@@ -44,29 +44,41 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Info Cards */}
         <View className="flex-row justify-between w-full mt-8">
-          <View className="bg-white rounded-xl p-4 flex-1 mr-2 shadow-sm">
+          <TouchableOpacity 
+            className="bg-white rounded-xl p-4 flex-1 mr-2 shadow-sm"
+            onPress={() => navigation.navigate("Attendees")}
+            activeOpacity={0.7}
+          >
             <View className="items-center">
               <Ionicons name="people" size={24} color="#1a5f3c" />
               <Text className="text-sm text-gray-600 mt-1">Attendees</Text>
               <Text className="text-lg font-bold text-rwanda-green">5</Text>
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View className="bg-white rounded-xl p-4 flex-1 mx-1 shadow-sm">
+          <TouchableOpacity 
+            className="bg-white rounded-xl p-4 flex-1 mx-1 shadow-sm"
+            onPress={() => navigation.navigate("Sponsors")}
+            activeOpacity={0.7}
+          >
             <View className="items-center">
               <Ionicons name="star" size={24} color="#f4c430" />
               <Text className="text-sm text-gray-600 mt-1">Sponsors</Text>
               <Text className="text-lg font-bold text-rwanda-gold">4</Text>
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View className="bg-white rounded-xl p-4 flex-1 ml-2 shadow-sm">
+          <TouchableOpacity 
+            className="bg-white rounded-xl p-4 flex-1 ml-2 shadow-sm"
+            onPress={() => navigation.navigate("Exhibitors")}
+            activeOpacity={0.7}
+          >
             <View className="items-center">
               <Ionicons name="grid" size={24} color="#0066cc" />
               <Text className="text-sm text-gray-600 mt-1">Exhibitors</Text>
               <Text className="text-lg font-bold text-rwanda-blue">5</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
 
         {/* Footer */}
