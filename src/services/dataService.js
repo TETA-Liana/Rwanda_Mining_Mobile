@@ -26,7 +26,7 @@ export const lookupPerson = async (scannedId) => {
     });
     const result = await response.json();
     // Map backend result to expected frontend format
-    if (result.valid) {
+    if (result.valid && result.status === 'FOUND') {
       return {
         success: true,
         data: {
@@ -36,7 +36,7 @@ export const lookupPerson = async (scannedId) => {
           company: result.company,
           email: result.email,
           phone: result.phone,
-          status: result.status === 'GRANTED' ? 'eligible' : result.status.toLowerCase(),
+          status: 'eligible',
           sponsorshipLevel: result.sponsorshipLevel,
           boothNumber: result.boothNumber,
           registrationDate: result.registrationDate,
@@ -52,7 +52,7 @@ export const lookupPerson = async (scannedId) => {
           company: result.company || 'Not Registered',
           email: result.email,
           phone: result.phone,
-          status: result.status === 'GRANTED' ? 'eligible' : result.status.toLowerCase(),
+          status: result.status === 'FOUND' ? 'not_eligible' : 'not_registered',
           sponsorshipLevel: result.sponsorshipLevel,
           boothNumber: result.boothNumber,
           registrationDate: result.registrationDate,

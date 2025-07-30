@@ -44,19 +44,9 @@ public class ExhibitorService {
                 exhibitor.getEmail(),
                 exhibitor.getFullPhoneNumber(),
                 "eligible",
-                generateBoothNumber(exhibitor.getId()),
                 exhibitor.getGrantedAt() != null ? 
                     exhibitor.getGrantedAt().format(DATE_FORMATTER) : 
                     exhibitor.getCreatedAt().format(DATE_FORMATTER)
         );
-    }
-
-    private String generateBoothNumber(Long id) {
-        // Generate booth number based on ID
-        // You can modify this logic based on your booth assignment strategy
-        int boothNum = (int) (id % 26); // A-Z
-        int section = (int) (id / 26) + 1; // 1, 2, 3, etc.
-        char boothLetter = (char) ('A' + boothNum);
-        return boothLetter + String.valueOf(section);
     }
 } 

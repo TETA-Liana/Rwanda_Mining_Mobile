@@ -37,54 +37,111 @@ public class ScanLogService {
         log.setRole("Unknown");
         log.setMatchedRecordId(null);
 
-        // Try Attendee
-        Optional<AttendeeRequest> attendeeOpt = attendeeRequestRepository.findById(parseId(scannedId, "ATT"));
-        if (attendeeOpt.isPresent()) {
-            AttendeeRequest attendee = attendeeOpt.get();
-            log.setRole("Attendee");
-            log.setMatchedRecordId(attendee.getId());
-            if ("GRANTED".equalsIgnoreCase(attendee.getStatus())) {
-                log.setStatus("GRANTED");
-                log.setValid(true);
-            } else {
-                log.setStatus(attendee.getStatus());
+        // Parse the raw content to extract role and first name
+        ParsedContent parsed = parseRawContent(rawContent);
+        log.setRole(parsed.role);
+
+        // Search for matching record based on role and first name
+        if ("Exhibitor".equals(parsed.role) && parsed.firstName != null) {
+            // Search in exhibitor_request table by first name
+            Optional<ExhibitorRequest> exhibitorOpt = exhibitorRequestRepository.findByFirstNameIgnoreCase(parsed.firstName);
+            if (exhibitorOpt.isPresent()) {
+                ExhibitorRequest exhibitor = exhibitorOpt.get();
+                log.setMatchedRecordId(exhibitor.getId());
+                log.setStatus("FOUND");
+                
+                // Check if status is GRANTED
+                if ("GRANTED".equalsIgnoreCase(exhibitor.getStatus())) {
+                    log.setValid(true);
+                } else {
+                    log.setValid(false);
+                }
             }
-            scanLogRepository.save(log);
-            return toDto(log);
-        }
-        // Try Sponsor
-        Optional<SponsorRequest> sponsorOpt = sponsorRequestRepository.findById(parseId(scannedId, "SPO"));
-        if (sponsorOpt.isPresent()) {
-            SponsorRequest sponsor = sponsorOpt.get();
-            log.setRole("Sponsor");
-            log.setMatchedRecordId(sponsor.getId());
-            if ("GRANTED".equalsIgnoreCase(sponsor.getStatus())) {
-                log.setStatus("GRANTED");
-                log.setValid(true);
-            } else {
-                log.setStatus(sponsor.getStatus());
+        } else if ("Sponsor".equals(parsed.role) && parsed.firstName != null) {
+            // Search in sponsor_request table by sponsor name (assuming it contains first name)
+            Optional<SponsorRequest> sponsorOpt = sponsorRequestRepository.findBySponsorNameContainingIgnoreCase(parsed.firstName);
+            if (sponsorOpt.isPresent()) {
+                SponsorRequest sponsor = sponsorOpt.get();
+                log.setMatchedRecordId(sponsor.getId());
+                log.setStatus("FOUND");
+                
+                // Check if status is GRANTED
+                if ("GRANTED".equalsIgnoreCase(sponsor.getStatus())) {
+                    log.setValid(true);
+                } else {
+                    log.setValid(false);
+                }
             }
-            scanLogRepository.save(log);
-            return toDto(log);
-        }
-        // Try Exhibitor
-        Optional<ExhibitorRequest> exhibitorOpt = exhibitorRequestRepository.findById(parseId(scannedId, "EXH"));
-        if (exhibitorOpt.isPresent()) {
-            ExhibitorRequest exhibitor = exhibitorOpt.get();
-            log.setRole("Exhibitor");
-            log.setMatchedRecordId(exhibitor.getId());
-            if ("GRANTED".equalsIgnoreCase(exhibitor.getStatus())) {
-                log.setStatus("GRANTED");
-                log.setValid(true);
-            } else {
-                log.setStatus(exhibitor.getStatus());
+        } else if ("Attendee".equals(parsed.role) && parsed.firstName != null) {
+            // Search in attendee_request table by first name
+            Optional<AttendeeRequest> attendeeOpt = attendeeRequestRepository.findByFirstNameIgnoreCase(parsed.firstName);
+            if (attendeeOpt.isPresent()) {
+                AttendeeRequest attendee = attendeeOpt.get();
+                log.setMatchedRecordId(attendee.getId());
+                log.setStatus("FOUND");
+                
+                // Check if status is GRANTED
+                if ("GRANTED".equalsIgnoreCase(attendee.getStatus())) {
+                    log.setValid(true);
+                } else {
+                    log.setValid(false);
+                }
             }
-            scanLogRepository.save(log);
-            return toDto(log);
         }
-        // Not found
+
+        // Save the log
         scanLogRepository.save(log);
         return toDto(log);
+    }
+
+    private static class ParsedContent {
+        String role;
+        String firstName;
+        
+        ParsedContent(String role, String firstName) {
+            this.role = role;
+            this.firstName = firstName;
+        }
+    }
+
+    private ParsedContent parseRawContent(String rawContent) {
+        if (rawContent == null || rawContent.trim().isEmpty()) {
+            return new ParsedContent("Unknown", null);
+        }
+
+        String content = rawContent.trim();
+        
+        // Extract role from badge type
+        String role = "Unknown";
+        if (content.toLowerCase().contains("exhibitor badge")) {
+            role = "Exhibitor";
+        } else if (content.toLowerCase().contains("sponsor badge")) {
+            role = "Sponsor";
+        } else if (content.toLowerCase().contains("attendee badge")) {
+            role = "Attendee";
+        }
+
+        // Extract first name from "Badge: FirstName LastName" pattern
+        String firstName = null;
+        if (content.contains("Badge:")) {
+            String badgePart = content.substring(content.indexOf("Badge:") + 6).trim();
+            if (badgePart.contains(",")) {
+                // Handle "FirstName LastName, Company" format
+                String namePart = badgePart.substring(0, badgePart.indexOf(",")).trim();
+                String[] nameParts = namePart.split("\\s+");
+                if (nameParts.length > 0) {
+                    firstName = nameParts[0];
+                }
+            } else {
+                // Handle "FirstName LastName" format
+                String[] nameParts = badgePart.split("\\s+");
+                if (nameParts.length > 0) {
+                    firstName = nameParts[0];
+                }
+            }
+        }
+
+        return new ParsedContent(role, firstName);
     }
 
     public List<ScanLogDto> getAllLogs() {
@@ -106,17 +163,10 @@ public class ScanLogService {
             .toList();
     }
 
-    private Long parseId(String scannedId, String prefix) {
-        try {
-            if (scannedId != null && scannedId.startsWith(prefix)) {
-                return Long.parseLong(scannedId.substring(prefix.length()));
-            }
-        } catch (Exception ignored) {}
-        return -1L;
-    }
+
 
     private ScanLogDto toDto(ScanLog log) {
-        String name = null, company = null, email = null, phone = null, sponsorshipLevel = null, boothNumber = null, registrationDate = null;
+        String name = null, company = null, email = null, phone = null, sponsorshipLevel = null, registrationDate = null;
         if ("Attendee".equals(log.getRole()) && log.getMatchedRecordId() != null && log.getMatchedRecordId() > 0) {
             Optional<AttendeeRequest> attendeeOpt = attendeeRequestRepository.findById(log.getMatchedRecordId());
             if (attendeeOpt.isPresent()) {
@@ -146,11 +196,10 @@ public class ScanLogService {
                 company = exhibitor.getCompanyName();
                 email = exhibitor.getEmail();
                 phone = exhibitor.getFullPhoneNumber();
-                boothNumber = exhibitor.getBoothNumber();
                 registrationDate = exhibitor.getGrantedAt() != null ? exhibitor.getGrantedAt().toLocalDate().toString() : null;
             }
         }
-        new ScanLogDto(
+        return new ScanLogDto(
                 log.getId(),
                 log.getScannedId(),
                 log.getRole(),
@@ -159,7 +208,7 @@ public class ScanLogService {
                 log.getValid(),
                 log.getTimestamp(),
                 log.getRawContent(),
-                name, company, email, phone, sponsorshipLevel, boothNumber, registrationDate
+                name, company, email, phone, sponsorshipLevel, null, registrationDate
         );
     }
 }

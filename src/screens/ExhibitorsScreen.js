@@ -106,8 +106,7 @@ const ExhibitorsScreen = ({ navigation }) => {
         exhibitor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         exhibitor.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
         exhibitor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        exhibitor.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        exhibitor.boothNumber.toLowerCase().includes(searchQuery.toLowerCase())
+        exhibitor.id.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredExhibitors(filtered);
   };
@@ -155,7 +154,7 @@ const ExhibitorsScreen = ({ navigation }) => {
         <View className="flex-row items-center">
           <Ionicons name="location" size={14} color="#0066cc" />
           <Text className="text-sm font-semibold text-rwanda-blue ml-1">
-            Booth {item.boothNumber}
+            Exhibitor
           </Text>
         </View>
       </View>

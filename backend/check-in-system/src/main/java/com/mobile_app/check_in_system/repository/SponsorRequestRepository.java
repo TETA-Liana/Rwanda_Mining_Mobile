@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SponsorRequestRepository extends JpaRepository<SponsorRequest, Long> {
@@ -34,4 +35,7 @@ public interface SponsorRequestRepository extends JpaRepository<SponsorRequest, 
     
     // Count granted sponsors by budget level
     long countByStatusAndSponsorBudget(String status, String sponsorBudget);
+    
+    // Find by sponsor name containing first name (case insensitive)
+    Optional<SponsorRequest> findBySponsorNameContainingIgnoreCase(String firstName);
 } 

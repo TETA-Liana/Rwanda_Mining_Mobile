@@ -7,19 +7,17 @@ public class ExhibitorDto {
     private String email;
     private String phone;
     private String status;
-    private String boothNumber;
     private String registrationDate;
 
     public ExhibitorDto() {}
 
-    public ExhibitorDto(String id, String name, String company, String email, String phone, String status, String boothNumber, String registrationDate) {
+    public ExhibitorDto(String id, String name, String company, String email, String phone, String status, String registrationDate) {
         this.id = id;
         this.name = name;
         this.company = company;
         this.email = email;
         this.phone = phone;
         this.status = status;
-        this.boothNumber = boothNumber;
         this.registrationDate = registrationDate;
     }
 
@@ -70,14 +68,6 @@ public class ExhibitorDto {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getBoothNumber() {
-        return boothNumber;
-    }
-
-    public void setBoothNumber(String boothNumber) {
-        this.boothNumber = boothNumber;
     }
 
     public String getRegistrationDate() {

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ExhibitorRequestRepository extends JpaRepository<ExhibitorRequest, Long> {
@@ -29,4 +30,7 @@ public interface ExhibitorRequestRepository extends JpaRepository<ExhibitorReque
     
     // Count granted exhibitors
     long countByStatus(String status);
+    
+    // Find by first name (case insensitive)
+    Optional<ExhibitorRequest> findByFirstNameIgnoreCase(String firstName);
 } 
