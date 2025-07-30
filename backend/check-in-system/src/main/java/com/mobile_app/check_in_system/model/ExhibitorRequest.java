@@ -48,6 +48,9 @@ public class ExhibitorRequest {
     @Column(name = "granted_at")
     private LocalDateTime grantedAt;
 
+    @Column(name = "booth_number")
+    private String boothNumber;
+
     // Constructors
     public ExhibitorRequest() {}
 
@@ -170,6 +173,13 @@ public class ExhibitorRequest {
 
     public void setGrantedAt(LocalDateTime grantedAt) {
         this.grantedAt = grantedAt;
+    }
+
+    public String getBoothNumber() {
+        return boothNumber;
+    }
+    public void setBoothNumber(String boothNumber) {
+        this.boothNumber = boothNumber;
     }
 
     // Helper method to get full name
